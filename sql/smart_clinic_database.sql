@@ -82,3 +82,88 @@ CREATE TABLE CARD_PAYMENT (
     transaction_reference VARCHAR(100) NOT NULL UNIQUE,
     FOREIGN KEY (payment_id) REFERENCES PAYMENT(payment_id)
 );
+INSERT INTO PATIENT
+(patient_id, full_name, date_of_birth, gender, phone, email, address, blood_type)
+VALUES
+(1, 'Ahmed Ali', '1995-03-12', 'Male', '0501111111', 'ahmed.ali@email.com', 'Dammam', 'O+'),
+(2, 'Sara Mohammed', '1998-07-21', 'Female', '0502222222', 'sara.m@email.com', 'Khobar', 'A+'),
+(3, 'Khalid Hassan', '1987-11-05', 'Male', '0503333333', 'khalid.h@email.com', 'Jubail', 'B+'),
+(4, 'Nora Abdullah', '2001-02-18', 'Female', '0504444444', 'nora.a@email.com', 'Dammam', 'AB+'),
+(5, 'Fahad Salem', '1992-09-30', 'Male', '0505555555', 'fahad.s@email.com', 'Khobar', 'O-');
+
+INSERT INTO DOCTOR
+(doctor_id, full_name, specialty, phone, email, consultation_fee)
+VALUES
+(1, 'Yazid Alshehri', 'Cardiology', '0511111111', 'yazid.alshehri@clinic.com', 300.00),
+(2, 'Mohammed Alsharif', 'Dermatology', '0522222222', 'mohammed.alsharif@clinic.com', 250.00),
+(3, 'Hamzah Alattas', 'Pediatrics', '0533333333', 'hamzah.alattas@clinic.com', 200.00),
+(4, 'Nansi Ajram', 'Internal Medicine', '0544444444', 'nansi.ajram@clinic.com', 275.00),
+(5, 'Nuha Nabeel', 'Orthopedics', '0555555555', 'nuha.nabeel@clinic.com', 350.00);
+
+INSERT INTO APPOINTMENT
+(appointment_id, patient_id, doctor_id, appointment_date, appointment_time, status, reason)
+VALUES
+(1, 1, 1, '2026-08-11', '09:00:00', 'Scheduled', 'Chest pain'),
+(2, 2, 2, '2026-08-11', '10:00:00', 'Completed', 'Skin rash'),
+(3, 3, 3, '2026-08-12', '11:30:00', 'Scheduled', 'Child fever'),
+(4, 4, 4, '2026-08-12', '13:00:00', 'Completed', 'General checkup'),
+(5, 5, 5, '2026-08-13', '15:00:00', 'Scheduled', 'Knee pain');
+
+INSERT INTO TREATMENT
+(treatment_id, appointment_id, diagnosis, treatment_description, treatment_date, treatment_cost)
+VALUES
+(1, 1, 'Mild chest pain', 'ECG test and medication', '2026-08-11', 450.00),
+(2, 2, 'Allergic skin rash', 'Topical cream treatment', '2026-08-11', 180.00),
+(3, 3, 'Viral fever', 'Rest and fever medication', '2026-08-12', 120.00),
+(4, 4, 'Routine checkup', 'General examination and blood test', '2026-08-12', 300.00),
+(5, 5, 'Knee strain', 'Pain relief and physiotherapy recommendation', '2026-08-13', 400.00);
+
+INSERT INTO PRESCRIPTION
+(prescription_id, appointment_id, issue_date, notes)
+VALUES
+(1, 1, '2026-08-11', 'Take medication after meals'),
+(2, 2, '2026-08-11', 'Apply cream twice daily'),
+(3, 3, '2026-08-12', 'Drink plenty of fluids'),
+(4, 4, '2026-08-12', 'Follow up after one week'),
+(5, 5, '2026-08-13', 'Avoid heavy exercise');
+
+INSERT INTO MEDICINE
+(medicine_id, medicine_name, stock_quantity, unit_price, expiry_date)
+VALUES
+(1, 'Aspirin', 100, 15.00, '2027-12-31'),
+(2, 'Hydrocortisone Cream', 60, 25.00, '2027-10-15'),
+(3, 'Paracetamol', 150, 10.00, '2028-01-20'),
+(4, 'Vitamin D', 80, 35.00, '2028-06-30'),
+(5, 'Ibuprofen', 120, 18.00, '2027-11-25');
+
+INSERT INTO PAYMENT
+(payment_id, appointment_id, amount, payment_date, payment_status)
+VALUES
+(1, 1, 750.00, '2026-08-11', 'Paid'),
+(2, 2, 430.00, '2026-08-11', 'Paid'),
+(3, 3, 320.00, '2026-08-12', 'Paid'),
+(4, 4, 575.00, '2026-08-12', 'Paid'),
+(5, 5, 750.00, '2026-08-13', 'Paid');
+
+INSERT INTO CONTAINS
+(prescription_id, medicine_id, dosage, frequency, duration_days, quantity)
+VALUES
+(1, 1, '100 mg', 'Once daily', 7, 7),
+(2, 2, 'Apply thin layer', 'Twice daily', 10, 1),
+(3, 3, '500 mg', 'Every 8 hours', 5, 15),
+(4, 4, '1000 IU', 'Once daily', 30, 30),
+(5, 5, '400 mg', 'Twice daily', 7, 14);
+
+INSERT INTO CASH_PAYMENT
+(payment_id, received_by)
+VALUES
+(1, 'Receptionist A'),
+(3, 'Receptionist B');
+
+INSERT INTO CARD_PAYMENT
+(payment_id, card_last_four_digits, transaction_reference)
+VALUES
+(2, '4821', 'TXN1002'),
+(4, '7315', 'TXN1004'),
+(5, '9264', 'TXN1005');
+
