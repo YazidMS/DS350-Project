@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS smart_clinic;
 CREATE DATABASE smart_clinic;
 USE smart_clinic;
 
@@ -267,4 +268,6 @@ VALUES
 SELECT medicine_id, medicine_name, stock_quantity
 FROM MEDICINE
 WHERE medicine_id = 5;
+
+
 
