@@ -1,5 +1,6 @@
 CREATE DATABASE smart_clinic;
 USE smart_clinic;
+
 CREATE TABLE PATIENT (
     patient_id INT PRIMARY KEY,
     full_name VARCHAR(100) NOT NULL,
@@ -166,4 +167,104 @@ VALUES
 (2, '4821', 'TXN1002'),
 (4, '7315', 'TXN1004'),
 (5, '9264', 'TXN1005');
+
+SELECT * FROM PATIENT;
+
+SELECT * FROM DOCTOR;
+
+SELECT * FROM APPOINTMENT;
+
+SELECT * FROM TREATMENT;
+
+SELECT * FROM PRESCRIPTION;
+
+SELECT * FROM MEDICINE;
+
+SELECT * FROM PAYMENT;
+
+SELECT * FROM CONTAINS;
+
+SELECT * FROM CASH_PAYMENT;
+
+SELECT * FROM CARD_PAYMENT;
+
+SELECT patient_id, full_name, blood_type
+FROM PATIENT;
+SHOW TABLES;
+
+SELECT
+    A.appointment_id,
+    P.full_name AS patient_name,
+    D.full_name AS doctor_name,
+    A.appointment_date,
+    A.status
+FROM APPOINTMENT A
+JOIN PATIENT P ON A.patient_id = P.patient_id
+JOIN DOCTOR D ON A.doctor_id = D.doctor_id;
+
+SELECT full_name
+FROM PATIENT
+WHERE patient_id IN (
+    SELECT patient_id
+    FROM APPOINTMENT
+    WHERE status = 'Completed'
+);
+
+SELECT
+    D.full_name AS doctor_name,
+    COUNT(A.appointment_id) AS total_appointments
+FROM DOCTOR D
+JOIN APPOINTMENT A ON D.doctor_id = A.doctor_id
+GROUP BY D.doctor_id, D.full_name;
+
+UPDATE MEDICINE
+SET stock_quantity = 90
+WHERE medicine_id = 1;
+
+SELECT medicine_id, medicine_name, stock_quantity
+FROM MEDICINE
+WHERE medicine_id = 1;
+
+DELETE FROM CONTAINS
+WHERE prescription_id = 5
+  AND medicine_id = 5;
+
+SELECT *
+FROM CONTAINS
+WHERE prescription_id = 5
+  AND medicine_id = 5;
+  
+CREATE VIEW appointment_details AS
+SELECT
+    A.appointment_id,
+    P.full_name AS patient_name,
+    D.full_name AS doctor_name,
+    A.appointment_date,
+    A.appointment_time,
+    A.status
+FROM APPOINTMENT A
+JOIN PATIENT P ON A.patient_id = P.patient_id
+JOIN DOCTOR D ON A.doctor_id = D.doctor_id;
+
+SELECT * FROM appointment_details;
+
+CREATE TRIGGER reduce_medicine_stock
+AFTER INSERT ON CONTAINS
+FOR EACH ROW
+UPDATE MEDICINE
+SET stock_quantity = stock_quantity - NEW.quantity
+WHERE medicine_id = NEW.medicine_id;
+
+SELECT medicine_id, medicine_name, stock_quantity
+FROM MEDICINE
+WHERE medicine_id = 5;
+
+INSERT INTO CONTAINS
+(prescription_id, medicine_id, dosage, frequency, duration_days, quantity)
+VALUES
+(5, 5, '400 mg', 'Twice daily', 7, 14);
+
+SELECT medicine_id, medicine_name, stock_quantity
+FROM MEDICINE
+WHERE medicine_id = 5;
 
